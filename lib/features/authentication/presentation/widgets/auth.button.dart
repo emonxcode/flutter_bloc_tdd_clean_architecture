@@ -2,7 +2,9 @@ import 'package:bloc_clean_architecture_tdd_solid/core/theme/color.pallete.dart'
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
-  const AuthButton({super.key});
+  const AuthButton({super.key, required this.label});
+
+  final label;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +26,9 @@ class AuthButton extends StatelessWidget {
             fixedSize: const Size(395, 55),
             backgroundColor: ColorPallete.transparentColor,
             shadowColor: ColorPallete.transparentColor),
-        child: const Text(
-          'Sign Up',
-          style: TextStyle(
+        child: Text(
+          label,
+          style: const TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
           ),
