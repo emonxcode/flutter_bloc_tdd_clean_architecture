@@ -1,11 +1,15 @@
 import 'package:bloc_clean_architecture_tdd_solid/core/theme/color.pallete.dart';
 import 'package:bloc_clean_architecture_tdd_solid/features/authentication/presentation/pages/signup.page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/auth.button.dart';
 import '../widgets/auth.field.dart';
 
 class LoginPage extends StatefulWidget {
+  static route() => CupertinoPageRoute(
+        builder: (context) => const LoginPage(),
+      );
   const LoginPage({super.key});
 
   @override
@@ -59,12 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignupPage(),
-                    ),
-                  );
+                  Navigator.push(context, SignupPage.route());
                 },
                 child: RichText(
                   text: TextSpan(

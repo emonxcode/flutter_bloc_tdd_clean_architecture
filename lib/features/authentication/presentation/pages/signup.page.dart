@@ -1,10 +1,14 @@
 import 'package:bloc_clean_architecture_tdd_solid/core/theme/color.pallete.dart';
+import 'package:bloc_clean_architecture_tdd_solid/features/authentication/presentation/pages/login.page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/auth.button.dart';
 import '../widgets/auth.field.dart';
 
 class SignupPage extends StatefulWidget {
+  static route() => CupertinoPageRoute(
+        builder: (context) => const SignupPage(),
+      );
   const SignupPage({super.key});
 
   @override
@@ -28,6 +32,13 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
@@ -59,21 +70,33 @@ class _SignupPageState extends State<SignupPage> {
                 isObsecureText: true,
               ),
               const SizedBox(height: 30),
-              const AuthButton(label: 'Sign Up',),
+              const AuthButton(
+                label: 'Sign Up',
+              ),
               const SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                  text: "Already have an account? ",
-                  style: Theme.of(context).textTheme.titleMedium,
-                  children: [
-                    TextSpan(
-                      text: 'Login',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: ColorPallete.gradient2,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    LoginPage.route(),
+                    (route) => true,
+                  );
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: "Already have an account? ",
+                    style: Theme.of(context).textTheme.titleMedium,
+                    children: [
+                      TextSpan(
+                        text: 'Login',
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: ColorPallete.gradient2,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
