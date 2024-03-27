@@ -2,14 +2,15 @@ import 'package:bloc_clean_architecture_tdd_solid/core/error/failures.dart';
 import 'package:bloc_clean_architecture_tdd_solid/core/usecase/usecase.dart';
 import 'package:dartz/dartz.dart';
 
+import '../entities/user.entity.dart';
 import '../repository/auth.repository.dart';
 
-class UserSignUp implements UseCase<String, UserSignUpParams> {
+class UserSignUp implements UseCase<User, UserSignUpParams> {
   final AuthRepository authRepository;
   UserSignUp(this.authRepository);
 
   @override
-  Future<Either<Failure, String>> call(UserSignUpParams params) async {
+  Future<Either<Failure, User>> call(UserSignUpParams params) async {
    return await authRepository.signUpWithEmailNPassword(
       name: params.name,
       email: params.email,

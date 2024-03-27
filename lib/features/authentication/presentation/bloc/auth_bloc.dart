@@ -2,6 +2,8 @@ import 'package:bloc_clean_architecture_tdd_solid/features/authentication/domain
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../domain/entities/user.entity.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -22,11 +24,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       response.fold(
         (l) {
-          print("failed ${l.message}");
           emit(AuthFailure(message: l.message));
         },
         (r) {
-          print("success");
           emit(AuthSuccess(uid: r));
         },
       );

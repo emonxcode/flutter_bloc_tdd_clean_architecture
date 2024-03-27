@@ -1,14 +1,15 @@
 import 'package:bloc_clean_architecture_tdd_solid/core/error/exceptions.dart';
+import 'package:bloc_clean_architecture_tdd_solid/features/authentication/data/models/user.model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<String> signUpWithEmailNPassword({
+  Future<UserModel> signUpWithEmailNPassword({
     required String name,
     required String email,
     required String password,
   });
 
-  Future<String> loginWithEmailNPassword({
+  Future<UserModel> loginWithEmailNPassword({
     required String email,
     required String password,
   });
@@ -19,7 +20,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required this.supabaseClient});
 
   @override
-  Future<String> loginWithEmailNPassword({
+  Future<UserModel> loginWithEmailNPassword({
     required String email,
     required String password,
   }) {
@@ -27,7 +28,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<String> signUpWithEmailNPassword({ 
+  Future<UserModel> signUpWithEmailNPassword({
     required String name,
     required String email,
     required String password,
@@ -39,12 +40,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         data: {'name': name},
       );
       if (response.user != null) {
-        return response.user!.id;
+        return UserModel.fromJson(response.user!.toJson());
       } else {
         throw const ServerException('User not created!');
       }
     } catch (exception) {
-      throw ServerException(exception.toString());
+      throw exception.toString();
     }
   }
 }
