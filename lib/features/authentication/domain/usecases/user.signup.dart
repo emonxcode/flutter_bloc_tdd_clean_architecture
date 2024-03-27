@@ -2,7 +2,7 @@ import 'package:bloc_clean_architecture_tdd_solid/core/error/failures.dart';
 import 'package:bloc_clean_architecture_tdd_solid/core/usecase/usecase.dart';
 import 'package:dartz/dartz.dart';
 
-import '../entities/user.entity.dart';
+import '../../../../core/common/entities/user.entity.dart';
 import '../repository/auth.repository.dart';
 
 class UserSignUp implements UseCase<User, UserSignUpParams> {

@@ -1,6 +1,8 @@
+import 'package:bloc_clean_architecture_tdd_solid/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:bloc_clean_architecture_tdd_solid/features/authentication/data/datasources/auth.remote.data.sources.dart';
 import 'package:bloc_clean_architecture_tdd_solid/features/authentication/data/repositories/auth.repository.impl.dart';
 import 'package:bloc_clean_architecture_tdd_solid/features/authentication/domain/repository/auth.repository.dart';
+import 'package:bloc_clean_architecture_tdd_solid/features/authentication/domain/usecases/current.user.dart';
 import 'package:bloc_clean_architecture_tdd_solid/features/authentication/domain/usecases/user.login.dart';
 import 'package:bloc_clean_architecture_tdd_solid/features/authentication/domain/usecases/user.signup.dart';
 import 'package:get_it/get_it.dart';
@@ -19,6 +21,9 @@ Future<void> initDependencies() async {
 
   serviceLocator.registerLazySingleton(() => supabase
       .client); // registerLazySingleton only create instance once for full app lifetime
+
+  // core
+  serviceLocator.registerLazySingleton(() => AppUserCubit());
 }
 
 void _intiAuth() {
@@ -52,11 +57,20 @@ void _intiAuth() {
       ),
     )
 
+    // Usecase
+    ..registerFactory(
+      () => CurrentUser(
+        serviceLocator(),
+      ),
+    )
+
     // Bloc
     ..registerLazySingleton(
       () => AuthBloc(
         userSignUp: serviceLocator(),
         userLogin: serviceLocator(),
+        currentUser: serviceLocator(),
+        appUserCubit: serviceLocator(),
       ),
     );
 }
