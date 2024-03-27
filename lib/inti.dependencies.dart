@@ -17,39 +17,46 @@ Future<void> initDependencies() async {
     anonKey: AppSecrets.supabaseAnonKey,
   );
 
-  serviceLocator.registerLazySingleton(
-      () => supabase.client); // only create instance once for full app lifetime
+  serviceLocator.registerLazySingleton(() => supabase
+      .client); // registerLazySingleton only create instance once for full app lifetime
 }
 
 void _intiAuth() {
-  serviceLocator.registerFactory<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(
-      supabaseClient: serviceLocator<SupabaseClient>(),
-    ),
-  ); // create new instance every time needed
+  // DataSource
+  // registerFactory create instance when needed
+  serviceLocator
+    ..registerFactory<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImpl(
+        supabaseClient: serviceLocator<SupabaseClient>(),
+      ),
+    )
 
-  serviceLocator.registerFactory<AuthRepository>(
-    () => AuthRepositoryImpl(
-      remoteDataSource: serviceLocator(),
-    ),
-  );
+    // Repository
+    ..registerFactory<AuthRepository>(
+      () => AuthRepositoryImpl(
+        remoteDataSource: serviceLocator(),
+      ),
+    )
 
-  serviceLocator.registerFactory(
-    () => UserSignUp(
-      serviceLocator(),
-    ),
-  );
+    // Usecase
+    ..registerFactory(
+      () => UserSignUp(
+        serviceLocator(),
+      ),
+    )
 
-    serviceLocator.registerFactory(
-    () => UserLogin(
-      serviceLocator(),
-    ),
-  );
+    // Usecase
+    ..registerFactory(
+      () => UserLogin(
+        serviceLocator(),
+      ),
+    )
 
-  serviceLocator.registerLazySingleton(
-    () => AuthBloc(
-      userSignUp: serviceLocator(),
-      userLogin: serviceLocator(),
-    ),
-  );
+    // Bloc
+    ..registerLazySingleton(
+      () => AuthBloc(
+        userSignUp: serviceLocator(),
+        userLogin: serviceLocator(),
+      ),
+    );
 }
