@@ -1,6 +1,5 @@
 import 'package:bloc_clean_architecture_tdd_solid/core/theme/theme.dart';
 import 'package:bloc_clean_architecture_tdd_solid/features/authentication/presentation/pages/login.page.dart';
-import 'package:bloc_clean_architecture_tdd_solid/features/authentication/presentation/pages/signup.page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
