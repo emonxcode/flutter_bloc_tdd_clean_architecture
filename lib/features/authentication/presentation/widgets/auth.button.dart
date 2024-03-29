@@ -2,9 +2,10 @@ import 'package:bloc_clean_architecture_tdd_solid/core/theme/color.pallete.dart'
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
-  const AuthButton({super.key, required this.label});
+  const AuthButton({super.key, required this.label, required this.onTap});
 
   final label;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class AuthButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onTap,
         style: ElevatedButton.styleFrom(
             fixedSize: const Size(395, 55),
             backgroundColor: ColorPallete.transparentColor,
